@@ -90,10 +90,10 @@ def run_async_server():
     #     store = ModbusSlaveContext(..., zero_mode=True)
     # ----------------------------------------------------------------------- # 
     store = ModbusSlaveContext(
-        di=ModbusSequentialDataBlock(0, [17]*100),
-        co=ModbusSequentialDataBlock(0, [17]*100),
-        hr=ModbusSequentialDataBlock(0, [17]*100),
-        ir=ModbusSequentialDataBlock(0, [17]*100))
+        di=ModbusSequentialDataBlock(0, [17]*25535),
+        co=ModbusSequentialDataBlock(0, [17]*25535),
+        hr=ModbusSequentialDataBlock(0, [17]*25535),
+        ir=ModbusSequentialDataBlock(0, [17]*25535))
     store.register(CustomModbusRequest.function_code, 'cm',
                    ModbusSequentialDataBlock(0, [17] * 100))
     context = ModbusServerContext(slaves=store, single=True)
@@ -117,8 +117,8 @@ def run_async_server():
 
     # TCP Server
 
-    # StartTcpServer(context, identity=identity, address=("localhost", 5020),
-    #                custom_functions=[CustomModbusRequest])
+    StartTcpServer(context, identity=identity, address=("localhost", 502),
+                   custom_functions=[CustomModbusRequest])
 
     # TCP Server with deferred reactor run
 
@@ -135,8 +135,8 @@ def run_async_server():
     # StartUdpServer(context, identity=identity, address=("127.0.0.1", 5020))
 
     # RTU Server
-    StartSerialServer(context, identity=identity,
-                      port='/dev/ttyp0', framer=ModbusRtuFramer)
+    # StartSerialServer(context, identity=identity,
+    #                   port='/dev/ttyp0', framer=ModbusRtuFramer)
 
     # ASCII Server
     # StartSerialServer(context, identity=identity,
